@@ -8,6 +8,18 @@ public class ThreeNumbers {
     private int second;
     private int third;
 
+    public ThreeNumbers(int first, int second, int third) {
+        this.first = first;
+        this.second = second;
+        this.third = third;
+    }
+
+    public ThreeNumbers() {
+        this.first = 0;
+        this.second = 0;
+        this.third = 0;
+    }
+
     public void insertExpectedThreeNumbers(String s) {
         first = Integer.parseInt(s.substring(0, 1));
         second = Integer.parseInt(s.substring(1, 2));
