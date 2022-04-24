@@ -12,7 +12,7 @@ public class Ball {
     public BallStatus match(Ball input) {
         if (isInSamePosition(input) && isSameNumber(input)) return BallStatus.STRIKE;
         if (isSameNumber(input)) return BallStatus.BALL;
-        return BallStatus.OUT;
+        return BallStatus.NOTHING;
     }
 
     private boolean isSameNumber(Ball input) {
