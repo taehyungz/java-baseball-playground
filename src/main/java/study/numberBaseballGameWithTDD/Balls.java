@@ -12,6 +12,13 @@ public class Balls {
         this.ballList = mapBallList(numberList);
     }
 
+    public static Balls from(String expected) {
+        int first = Integer.parseInt(expected.substring(0, 1));
+        int second = Integer.parseInt(expected.substring(1, 2));
+        int third = Integer.parseInt(expected.substring(2,3));
+        return new Balls(List.of(first, second, third));
+    }
+
     private List<Ball> mapBallList(List<Integer> numberList) {
         List<Ball> ballList = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
@@ -35,16 +42,46 @@ public class Balls {
     }
 
     public ScoreStatus matchAll(Balls expected) {
+        Map<BallStatus, Integer> countMap = getBallStatusCountByMatchEach(expected);
+        return Score.from(countMap);
+    }
+
+    private Map<BallStatus, Integer> getBallStatusCountByMatchEach(Balls expected) {
         Map<BallStatus, Integer> countMap = new HashMap<>();
 
         for (Ball ball : expected.ballList) {
             addOneCount(countMap, ball);
         }
-        return Score.getScore(countMap);
+        return countMap;
     }
 
     private void addOneCount(Map<BallStatus, Integer> countMap, Ball ball) {
         BallStatus status = this.match(ball);
         countMap.put(status, countMap.getOrDefault(status, 0) + 1);
+    }
+
+    public static Balls randomBalls() {
+        List<Integer> randomNumberList = getRandomUniqueNumberList();
+        return new Balls(randomNumberList);
+    }
+
+    private static List<Integer> getRandomUniqueNumberList() {
+        List<Integer> randomNumberList = new ArrayList<>();
+        randomNumberList.add(generateRandomNumber());
+        randomNumberList.add(generateRandomNumberWithoutBannedNumber(randomNumberList));
+        randomNumberList.add(generateRandomNumberWithoutBannedNumber(randomNumberList));
+        return randomNumberList;
+    }
+
+    private static int generateRandomNumber() {
+        return (int) (Math.random() * 9) + 1;
+    }
+
+    private static int generateRandomNumberWithoutBannedNumber(List<Integer> bannedNumberList) {
+        int uniqueNumber = generateRandomNumber();
+        while (bannedNumberList.contains(uniqueNumber)) {
+            uniqueNumber = generateRandomNumber();
+        }
+        return uniqueNumber;
     }
 }

@@ -7,7 +7,7 @@ import static study.numberBaseballGameWithTDD.BallStatus.*;
 
 public class Score {
 
-    public static ScoreStatus getScore(Map<BallStatus, Integer> count) {
+    public static ScoreStatus from(Map<BallStatus, Integer> count) {
         int strikeCount = count.getOrDefault(STRIKE, 0);
         int ballCount = count.getOrDefault(BALL, 0);
         int nothingCount = count.getOrDefault(NOTHING, 0);
