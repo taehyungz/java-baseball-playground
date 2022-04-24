@@ -1,7 +1,9 @@
 package study.numberBaseballGameWithTDD;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Balls {
     private final List<Ball> ballList;
@@ -30,5 +32,19 @@ public class Balls {
                 .filter(ballStatus -> ballStatus != BallStatus.NOTHING)
                 .findFirst()
                 .orElse(BallStatus.NOTHING);
+    }
+
+    public ScoreStatus matchAll(Balls expected) {
+        Map<BallStatus, Integer> countMap = new HashMap<>();
+
+        for (Ball ball : expected.ballList) {
+            addOneCount(countMap, ball);
+        }
+        return Score.getScore(countMap);
+    }
+
+    private void addOneCount(Map<BallStatus, Integer> countMap, Ball ball) {
+        BallStatus status = this.match(ball);
+        countMap.put(status, countMap.getOrDefault(status, 0) + 1);
     }
 }
